@@ -6,15 +6,29 @@ import { Provider } from 'react-redux';
 import { createStore } from 'redux';
 import { composeWithDevTools } from 'redux-devtools-extension'
 
-import reducer from './reducers'
+import { PersistGate } from 'redux-persist/integration/react'
 
-const store = createStore(reducer,composeWithDevTools())
+import { persistStore, persistReducer } from 'redux-persist'
+import storage from 'redux-persist/lib/storage' 
+
+import reducer from './reducers'; 
+
+const persistConfig = {
+    key: 'root',
+    storage,
+    // blacklist: ['count'],
+    // whitelist: ['navigation']
+}
+
+const persistedReducer = persistReducer(persistConfig, reducer)
+
+const store = createStore(persistedReducer,composeWithDevTools())
+let persistor = persistStore(store)
 
 ReactDOM.render(
-    <div>
-        <Provider store={ store }>
+    <Provider store={ store }>
+        <PersistGate loading={null} persistor={persistor}>
             <App />
-        </Provider>
-    </div>
+        </PersistGate>
+    </Provider>
 , document.getElementById('root'));
-

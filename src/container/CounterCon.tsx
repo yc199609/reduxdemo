@@ -7,7 +7,9 @@ import { StoreState } from '../types';
 
 // 创建类型接口
 export interface IProps {
-    value: number,
+    value:{
+        count:number
+    },
     onIncrement: () => void,
     onDecrement: () => void
 }
@@ -23,7 +25,7 @@ class Counter extends React.PureComponent<IProps> {
         const { value, onIncrement, onDecrement } = this.props
         return (
             <p>
-                Clicked: { value } times
+                Clicked: { value.count } times
                 <br />
                 <br />
                 <button onClick={ onIncrement } style={{ marginRight: 20 }}> +  </button>
@@ -36,7 +38,10 @@ class Counter extends React.PureComponent<IProps> {
 // 将 reducer 中的状态插入到组件的 props 中
 // 下面是单个reducer的时候，多个的时候需要选传入哪个reducer
 // const { test, count } = state
-const mapStateToProps = (state: StoreState): { value: number } => ({
+interface Istate {
+    count:number
+}
+const mapStateToProps = (state: StoreState): { value:Istate } => ({
     value: state
 })
   

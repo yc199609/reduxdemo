@@ -1,7 +1,8 @@
 import { ModifyAction } from '../store/actions';
 import { DECREMENT, INCREMENT } from '../store/const';
+import { combineReducers } from 'redux';
 
-export default (state = 0, action: ModifyAction): number => {
+const count = (state = 0, action: ModifyAction): number => {
   switch (action.type) {
     case INCREMENT:
       return state + 1
@@ -11,3 +12,10 @@ export default (state = 0, action: ModifyAction): number => {
       return state
   }
 }
+
+const rootReducer = combineReducers({
+  count
+})
+
+
+export default rootReducer

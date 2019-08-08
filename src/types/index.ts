@@ -1,1 +1,1 @@
-export type StoreState = number
+export type StoreState = any
